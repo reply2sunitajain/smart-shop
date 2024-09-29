@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kids' Toy Shop</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #ffcc00;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: inline;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 10px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        .search-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .search-box {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            width: 200px;
+        }
+
+        .cart {
+            display: inline-block;
+            margin-left: 20px;
+        }
+
+        .main {
+            padding: 20px;
+        }
+
+        .product-list {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .product,
+        .cart-item {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+            margin: 10px;
+            width: 200px;
+            background-color: #fff;
+        }
+
+        .product img,
+        .cart-item img {
+            width: 100px;
+            height: 100px;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        .cart-list,
+        .payment-form {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .cart-list .close,
+        .payment-form .close {
+            position: absolute;
+            right: 25px;
+            top: 25px;
+            color: #aaa;
+            font-size: 35px;
+            font-weight: bold;
+        }
+
+        .cart-list .close:hover,
+        .cart-list .close:focus,
+        .payment-form .close:hover,
+        .payment-form .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .cart-content,
+        .form-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            margin: 0 auto;
+            max-width: 800px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .column {
+            flex: 1;
+            margin: 0 10px;
+        }
+
+        .column h2 {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .accepted-cards img {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Welcome to the Kids' Toy Shop</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Shop</a></li>
+                <li><a href="faqs.html">About Us</a></li>
+                <li><a href="contactinfo.html">Contact</a></li>
+            </ul>
+            <div class="search-container">
+                <input type="text" id="search-box" class="search-box" placeholder="Search...">
+            </div>
+            <div class="cart">
+                <span>Cart: <span id="cart-count">0</span> items</span>
+                <button onclick="viewCart()">View Cart</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="product-list" id="product-list">
+            <!-- Products will be dynamically added here -->
+        </section>
+
+        <div class="cart-list" id="cart-list">
+            <div class="cart-content">
+                <span class="close" onclick="closeCart()">&times;</span>
+                <h2>Your Cart</h2>
+                <div id="cart-items"></div>
+                <button onclick="showPaymentForm()">Proceed to Checkout</button>
+            </div>
+        </div>
+
+        <div class="payment-form" id="payment-form">
+            <div class="form-content">
+                <span class="close" onclick="closePaymentForm()">&times;</span>
+                <div class="container">
+                    <div class="column">
+                        <h2>BILLING ADDRESS</h2>
+                        <div class="form-group">
+                            <label for="name">Full name</label>
+                            <input type="text" id="name" placeholder="Enter name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" placeholder="Enter email">
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <input type="text" id="address" placeholder="Enter address">
+                        </div>
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" id="city" placeholder="Enter City">
+                        </div>
+                        <div class="form-group">
+                            <label for="state">State</label>
+                            <select id="state">
+                                <option>Choose State..</option>
+                                <option>State 1</option>
+                                <option>State 2</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="zip">Zip code</label>
+                            <input type="text" id="zip" placeholder="Zip code">
+                        </div>
+                    </div>
+                    <div class="column">
+                        <h2>PAYMENT</h2>
+                        <div class="accepted-cards">
+                            <label>Accepted Card</label><br>
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="Visa"
+                                width="50">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png"
+                                alt="Mastercard" width="50">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Discover_Card_logo.png"
+                                alt="Discover" width="50">
+                        </div>
+                        <div class="form-group">
+                            <label for="ccnum">Credit Card Number</label>
+                            <input type="text" id="ccnum" placeholder="Enter card number">
+                        </div>
+                        <div class="form-group">
+                            <label for="expmonth">Exp Month</label>
+                            <input type="text" id="expmonth" placeholder="Enter Month">
+                        </div>
+                        <div class="form-group">
+                            <label for="expyear">Exp Year</label>
+                            <select id="expyear">
+                                <option>Choose Year..</option>
+                                <option>2024</option>
+                                <option>2025</option>
+                                <option>2026</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="cvv">CVV</label>
+                            <input type="text" id="cvv" placeholder="CVV">
+                        </div>
+                        <button class="btn" onclick="proceedToCheckout()">Proceed to Checkout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Kids' Toy Shop</p>
+    </footer>
+
+    <script>
+        let cartCount = 0;
+        let cartItems = [];
+        let products = [
+            { name: 'Toy Car', price: 1000, image_url: 'https://images.unsplash.com/photo-1519581246333-78162706b927?q=80&w=1888&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+            { name: 'Doll House', price: 1500, image_url: 'https://plus.unsplash.com/premium_photo-1661274044376-d372f897757a?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
+            { name: 'Building Blocks', price: 2000, image_url: 'https://images.pexels.com/photos/311269/pexels-photo-311269.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' },
+            { name: 'Remote Control Car', price: 2500, image_url: 'https://images.pexels.com/photos/772393/pexels-photo-772393.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' },
+            { name: 'Action Figure', price: 3000, image_url: 'https://images.pexels.com/photos/1084753/pexels-photo-1084753.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' },
+            { name: 'Puzzle', price: 3500, image_url: 'https://images.pexels.com/photos/17485819/pexels-photo-17485819/free-photo-of-an-artist-s-illustration-of-artificial-intelligence-ai-this-image-represents-the-ways-in-which-ai-can-solve-important-problems-it-was-created-by-vincent-schwenk-as-part-of-the-visualis.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' },
+            { name: 'Stuffed Animal', price: 400, image_url: 'https://images.pexels.com/photos/46178/teddy-bear-bear-children-toys-forest-46178.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' },
+            { name: 'Board Game', price: 1200, image_url: 'https://images.pexels.com/photos/6114959/pexels-photo-6114959.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' },
+            { name: 'Coloring Book', price: 300, image_url: 'https://images.pexels.com/photos/7181612/pexels-photo-7181612.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' },
+            { name: 'Crayons', price: 150, image_url: 'https://images.pexels.com/photos/284082/pexels-photo-284082.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' },
+            { name: 'Play-Doh Set', price: 500, image_url: 'https://images.pexels.com/photos/1452797/pexels-photo-1452797.jpeg?auto=compress&cs=tinysrgb&w=600/' },
+            { name: 'Toy Train', price: 1800, image_url: 'https://images.pexels.com/photos/1119234/pexels-photo-1119234.jpeg?auto=compress&cs=tinysrgb&w=600' },
+            { name: 'Magic Wand', price: 800 },
+            { name: 'Action Figure Set', price: 3500 },
+            { name: 'Mini Basketball Hoop', price: 1500 },
+            { name: 'Educational Tablet', price: 4000 },
+            { name: 'Jigsaw Puzzle', price: 700 },
+            { name: 'Stuffed Bear', price: 600 },
+            { name: 'Building Kit', price: 2200 },
+            { name: 'Toy Kitchen Set', price: 2000 },
+            { name: 'Toy Doctor Kit', price: 800 },
+            { name: 'Doll Stroller', price: 1200 },
+            { name: 'Toy Guitar', price: 1000 },
+            { name: 'Kids Camera', price: 2500 },
+            { name: 'Remote Control Helicopter', price: 3000 },
+            { name: 'Magic Set', price: 900 },
+            { name: 'Dollhouse Furniture', price: 600 },
+            { name: 'Toy Car Track', price: 1500 },
+            { name: 'Mini Drone', price: 2500 },
+            { name: 'Art Supplies Set', price: 500 },
+            { name: 'Toy Train Set', price: 1800 },
+            { name: 'Building Blocks Set', price: 2200 },
+            { name: 'Action Figure Set', price: 3500 },
+            { name: 'Play-Doh Fun', price: 600 },
+            { name: 'Toy Airplane', price: 2000 },
+            { name: 'Educational Books', price: 400 },
+            { name: 'Toy Robots', price: 2500 },
+            { name: 'Kids Bicycle', price: 3500 },
+            { name: 'Puzzles & Games', price: 800 },
+            { name: 'Toy Kitchen Accessories', price: 1000 },
+            { name: 'Kids Camping Set', price: 1500 },
+            { name: 'Playhouse Tent', price: 2000 },
+            { name: 'Toy Farm Animals', price: 1200 },
+            { name: 'Educational Games', price: 900 },
+            { name: 'Toy Story Figures', price: 2000 },
+            { name: 'Kids Bowling Set', price: 1000 },
+            { name: 'Stuffed Pets', price: 700 },
+            { name: 'Kids Jewelry Kit', price: 600 },
+            { name: 'Craft Supplies', price: 400 },
+            { name: 'Toy Tool Set', price: 1500 },
+            { name: 'Doll Accessories', price: 800 },
+            { name: 'Toy Science Kit', price: 2500 },
+            { name: 'Magic Show Kit', price: 1000 },
+            { name: 'Educational Puzzles', price: 600 },
+            { name: 'Kids Karaoke Machine', price: 3000 },
+            { name: 'Toy Train Tracks', price: 1500 },
+            { name: 'Toy Remote Control Car', price: 2500 },
+            { name: 'Kids Art Easel', price: 2000 },
+            { name: 'Toy Flashlight', price: 400 },
+            { name: 'Toy Camping Gear', price: 1500 },
+            { name: 'Dollhouse Play Set', price: 3000 },
+            { name: 'Kids Sand Toys', price: 800 },
+            { name: 'Toy Learning Tablet', price: 2500 },
+            { name: 'Remote Control Boat', price: 2000 },
+            { name: 'Kids Musical Instruments', price: 1200 },
+            { name: 'Educational Flashcards', price: 300 },
+            { name: 'Kids Science Lab', price: 3500 },
+            { name: 'Toy Camera', price: 1000 },
+            { name: 'Kids Magic Kit', price: 800 },
+            { name: 'Toy Construction Set', price: 2000 },
+            { name: 'Kids Tents & Tunnels', price: 1500 },
+            { name: 'Toy Adventure Kit', price: 2000 },
+            { name: 'Kids Beach Toys', price: 500 },
+            { name: 'Stuffed Animal Set', price: 1000 },
+            { name: 'Toy Kitchen Accessories Set', price: 800 },
+            { name: 'Kids Garden Tools', price: 700 },
+            { name: 'Toy Dinosaur Figures', price: 1200 },
+            { name: 'Kids Art Kit', price: 900 },
+            { name: 'Toy Wagon', price: 1500 },
+            { name: 'Kids Yoga Mat', price: 600 },
+            { name: 'Toy Skateboard', price: 2000 },
+            { name: 'Kids Exercise Equipment', price: 2500 },
+            { name: 'Dollhouse Miniatures', price: 700 },
+            { name: 'Kids Science Projects', price: 1500 },
+            { name: 'Toy Camping Tent', price: 2000 },
+            { name: 'hp laptop', price: 75000, image_url: 'https://images.pexels.com/photos/13823992/pexels-photo-13823992.jpeg?auto=compress&cs=tinysrgb&w=600'},
+            { name: 'dell laptop', price: 70000, image_url: 'https://images.pexels.com/photos/3776438/pexels-photo-3776438.jpeg?auto=compress&cs=tinysrgb&w=600' },
+            { name: 'hp smart wireless printer', price: 10000 },
+            { name: 'iQOO Z9 5G ', price: 19998 },
+            { name: 'Boult Audio UFO Truly Wireless in Ear Earbuds ', price: 1449 },
+            { name: 'ZEBRONICS THUNDER Bluetooth 5.3 Wireless Headphones ', price: 699 },
+            { name: 'boAt Rockerz 550 Over Ear Bluetooth Headphones', price: 1799 },
+            { name: 'OnePlus Nord CE4 Lite 5G', price: 19999 },
+            { name: 'Redmi 12 5G ', price: 13999 },
+            { name: 'HONOR MagicBook X16', price: 41990 },
+            { name: 'AXL VayuBook Laptop 14.1 ', price: 11990, image_url: 'https://images.pexels.com/photos/7974/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=600' },
+            { name: '(Refurbished) Lenovo ThinkPad P50 Intel Core i7- ', price: 25990 },
+            { name: 'ASUS VivoBook 15 (2021) Thin and Light Laptop', price: 24990, image_url: 'https://images.pexels.com/photos/129208/pexels-photo-129208.jpeg?auto=compress&cs=tinysrgb&w=600' },
+            { name: 'Lenovo IdeaPad 1 AMD Ryzen 5 5500U 15.6" (39.62cm) FHD Thin & Light Laptop  ', price: 34990, image_url: 'https://images.pexels.com/photos/1028441/pexels-photo-1028441.jpeg?auto=compress&cs=tinysrgb&w=600' },
+            { name: 'Dell 15 Thin & Light Laptop, Intel Core i5-1235U ', price: 48990, image_url: 'https://media.istockphoto.com/id/1452281128/photo/laptop-blank-screen-on-wood-table-with-coffee-cafe-background-mockup-template-for-your-text.jpg?b=1&s=612x612&w=0&k=20&c=od7aSeC5O6A_uvMfeaA1YomESKx9mAwCcGhx4IomubE=' },
+            { name: 'Apple MacBook Air Laptop M1 chip', price: 67990, image_url: 'https://images.pexels.com/photos/28579173/pexels-photo-28579173/free-photo-of-modern-workspace-with-laptop-and-coffee-cup.jpeg?auto=compress&cs=tinysrgb&w=600' },
+            { name: 'Noise Pulse 2 Max 1.85" Display, Bluetooth Calling Smart Watch', price: 1099 },
+            { name: 'beatXP Marv 1.85” (4.5 cm) HD Display Smart Watch with Bluetooth Calling', price: 999 },
+            { name: 'Noise Halo Plus 1.46" Super AMOLED Display Elite Smart Watch, Bluetooth Calling', price: 2799 },
+            { name: 'Fire-Boltt Phoenix Pro 1.39" Bluetooth Calling Smartwatch, AI Voice Assistant', price: 1499 },
+            { name: 'smart phone s24 ultra ', price: 100000 },
+            { name: 'smart phone i phone 15 pro max ', price: 40990 },
+            { name: 'Samsung 80 cm (32 Inches) Wondertainment Series HD Ready LED', price: 12890 },
+            { name: 'LG 80 cm (32 inches) HD Ready Smart LED TV 32LQ576BPSA (Ceramic Black)', price: 15990 },
+            { name: 'printer store', price: 100 },
+
+        ];
+
+        function displayProducts(productsToDisplay) {
+            const productList = document.getElementById('product-list');
+            productList.innerHTML = ''; // Clear existing products
+            productsToDisplay.forEach(product => {
+                const productDiv = document.createElement('div');
+                productDiv.classList.add('product');
+                productDiv.innerHTML = `
+                    <img src="${product.image_url}" alt="${product.name}" style="width:100px; height:100px;" />
+                    <h3>${product.name}</h3>
+                    <p>₹${product.price}</p>
+                    <button onclick="addToCart('${product.name}', ${product.price})">Add to Cart</button>
+                `;
+                productList.appendChild(productDiv);
+            });
+        }
+
+        function addToCart(name, price) {
+            cartCount++;
+            document.getElementById('cart-count').textContent = cartCount;
+
+            const cartItem = cartItems.find(item => item.name === name);
+            if (cartItem) {
+                cartItem.quantity++;
+            } else {
+                cartItems.push({ name, price, quantity: 1 });
+            }
+
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartItemsDiv = document.getElementById('cart-items');
+            cartItemsDiv.innerHTML = '';
+            cartItems.forEach(item => {
+                const cartItemDiv = document.createElement('div');
+                cartItemDiv.classList.add('cart-item');
+                cartItemDiv.innerHTML = `
+                    <h4>${item.name}</h4>
+                    <p>₹${item.price} x ${item.quantity}</p>
+                `;
+                cartItemsDiv.appendChild(cartItemDiv);
+            });
+        }
+
+        function viewCart() {
+            document.getElementById('cart-list').style.display = 'block';
+        }
+
+        function closeCart() {
+            document.getElementById('cart-list').style.display = 'none';
+        }
+
+        function showPaymentForm() {
+            document.getElementById('payment-form').style.display = 'block';
+        }
+
+        function closePaymentForm() {
+            document.getElementById('payment-form').style.display = 'none';
+        }
+
+        function proceedToCheckout() {
+            closePaymentForm();
+            cartItems = [];
+            cartCount = 0;
+            document.getElementById('cart-count').textContent = cartCount;
+            updateCart();
+        }
+
+        function handleEscKey(event) {
+            if (event.key === 'Escape') {
+                if (document.getElementById('cart-list').style.display === 'block') {
+                    closeCart();
+                } else if (document.getElementById('payment-form').style.display === 'block') {
+                    closePaymentForm();
+                }
+            }
+        }
+
+        function searchProducts() {
+            const query = document.getElementById('search-box').value.toLowerCase();
+            const filteredProducts = products.filter(product =>
+                product.name.toLowerCase().includes(query)
+            );
+            displayProducts(filteredProducts);
+        }
+
+        window.onload = function () {
+            displayProducts(products);
+            document.getElementById('search-box').addEventListener('input', searchProducts);
+        };
+
+        document.addEventListener('keydown', handleEscKey);
+    </script>
+</body>
+
+</html>
