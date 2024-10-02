@@ -283,6 +283,7 @@
 </head>
 
 <body>
+    
     <header>
         <h1>Welcome to the Kids' Toy Shop</h1>
         <nav>
@@ -291,6 +292,7 @@
                 <li><a href="#">Shop</a></li>
                 <li><a href="faqs.html">About Us</a></li>
                 <li><a href="contactinfo.html">Contact</a></li>
+                <li><a href="sign_in_page.html">sign in</a></li>
             </ul>
             <div class="search-container">
                 <input type="text" id="search-box" class="search-box" placeholder="Search...">
@@ -401,19 +403,17 @@
         let cartCount = 0;
         let cartItems = [];
         let products = [
-            { name: 'Toy Car', price: 1000, image_url: 'https://images.unsplash.com/photo-1519581246333-78162706b927?q=80&w=1888&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
-            { name: 'Doll House', price: 1500, image_url: 'https://plus.unsplash.com/premium_photo-1661274044376-d372f897757a?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
-            { name: 'Building Blocks', price: 2000, image_url: 'https://images.pexels.com/photos/311269/pexels-photo-311269.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' },
-            { name: 'Remote Control Car', price: 2500, image_url: 'https://images.pexels.com/photos/772393/pexels-photo-772393.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' },
-            { name: 'Action Figure', price: 3000, image_url: 'https://images.pexels.com/photos/1084753/pexels-photo-1084753.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' },
-            { name: 'Puzzle', price: 3500, image_url: 'https://images.pexels.com/photos/17485819/pexels-photo-17485819/free-photo-of-an-artist-s-illustration-of-artificial-intelligence-ai-this-image-represents-the-ways-in-which-ai-can-solve-important-problems-it-was-created-by-vincent-schwenk-as-part-of-the-visualis.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' },
-            { name: 'Stuffed Animal', price: 400, image_url: 'https://images.pexels.com/photos/46178/teddy-bear-bear-children-toys-forest-46178.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' },
-            { name: 'Board Game', price: 1200, image_url: 'https://images.pexels.com/photos/6114959/pexels-photo-6114959.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' },
-            { name: 'Coloring Book', price: 300, image_url: 'https://images.pexels.com/photos/7181612/pexels-photo-7181612.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' },
-            { name: 'Crayons', price: 150, image_url: 'https://images.pexels.com/photos/284082/pexels-photo-284082.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2' },
-            { name: 'Play-Doh Set', price: 500, image_url: 'https://images.pexels.com/photos/1452797/pexels-photo-1452797.jpeg?auto=compress&cs=tinysrgb&w=600/' },
-            { name: 'Toy Train', price: 1800, image_url: 'https://images.pexels.com/photos/1119234/pexels-photo-1119234.jpeg?auto=compress&cs=tinysrgb&w=600' },
-            { name: 'Magic Wand', price: 800 },
+            { name: 'Toy Car', price: 1000, image_url: './images/toy_car.avif' },
+            { name: 'Doll House', price: 1500, image_url: './images/doll_house.avif' },
+            { name: 'Building Blocks', price: 2000, image_url: './images/building_blocks.webp' },
+            { name: 'Remote Control Car', price: 2500, image_url: './images/remote_control_car.jpg' },
+            { name: 'Stuffed Animal', price: 400, image_url: './images/teddy-bear.jpeg' },
+            { name: 'Board Game', price: 1200, image_url: './images/board game.webp' },
+            { name: 'Coloring Book', price: 300, image_url: './images/colouring book.webp' },
+            { name: 'Crayons', price: 150, image_url: './images/croyons.webp' },
+            { name: 'Play-Doh Set', price: 500, image_url: './images/clay.webp' },
+            { name: 'Toy Train', price: 1800, image_url: './images/toy_train.jpg' },
+            { name: 'Magic Wand', price: 800, image_url: './images/magic_wand.jpg' },
             { name: 'Action Figure Set', price: 3500 },
             { name: 'Mini Basketball Hoop', price: 1500 },
             { name: 'Educational Tablet', price: 4000 },
@@ -433,7 +433,7 @@
             { name: 'Art Supplies Set', price: 500 },
             { name: 'Toy Train Set', price: 1800 },
             { name: 'Building Blocks Set', price: 2200 },
-            { name: 'Action Figure Set', price: 3500 },
+            { name: 'Action Figure Set', price: 3500, image_url: './images/action figure.webp' },
             { name: 'Play-Doh Fun', price: 600 },
             { name: 'Toy Airplane', price: 2000 },
             { name: 'Educational Books', price: 400 },
@@ -486,8 +486,8 @@
             { name: 'Dollhouse Miniatures', price: 700 },
             { name: 'Kids Science Projects', price: 1500 },
             { name: 'Toy Camping Tent', price: 2000 },
-            { name: 'hp laptop', price: 75000, image_url: 'https://images.pexels.com/photos/13823992/pexels-photo-13823992.jpeg?auto=compress&cs=tinysrgb&w=600'},
-            { name: 'dell laptop', price: 70000, image_url: 'https://images.pexels.com/photos/3776438/pexels-photo-3776438.jpeg?auto=compress&cs=tinysrgb&w=600' },
+            { name: 'hp laptop', price: 75000, image_url: './images/laptop1.webp'},
+            { name: 'dell laptop', price: 70000, image_url: './images/laptop2.webp' },
             { name: 'hp smart wireless printer', price: 10000 },
             { name: 'iQOO Z9 5G ', price: 19998 },
             { name: 'Boult Audio UFO Truly Wireless in Ear Earbuds ', price: 1449 },
@@ -496,12 +496,12 @@
             { name: 'OnePlus Nord CE4 Lite 5G', price: 19999 },
             { name: 'Redmi 12 5G ', price: 13999 },
             { name: 'HONOR MagicBook X16', price: 41990 },
-            { name: 'AXL VayuBook Laptop 14.1 ', price: 11990, image_url: 'https://images.pexels.com/photos/7974/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=600' },
+            { name: 'AXL VayuBook Laptop 14.1 ', price: 11990, image_url: './images/laptop3.jpeg' },
             { name: '(Refurbished) Lenovo ThinkPad P50 Intel Core i7- ', price: 25990 },
-            { name: 'ASUS VivoBook 15 (2021) Thin and Light Laptop', price: 24990, image_url: 'https://images.pexels.com/photos/129208/pexels-photo-129208.jpeg?auto=compress&cs=tinysrgb&w=600' },
-            { name: 'Lenovo IdeaPad 1 AMD Ryzen 5 5500U 15.6" (39.62cm) FHD Thin & Light Laptop  ', price: 34990, image_url: 'https://images.pexels.com/photos/1028441/pexels-photo-1028441.jpeg?auto=compress&cs=tinysrgb&w=600' },
-            { name: 'Dell 15 Thin & Light Laptop, Intel Core i5-1235U ', price: 48990, image_url: 'https://media.istockphoto.com/id/1452281128/photo/laptop-blank-screen-on-wood-table-with-coffee-cafe-background-mockup-template-for-your-text.jpg?b=1&s=612x612&w=0&k=20&c=od7aSeC5O6A_uvMfeaA1YomESKx9mAwCcGhx4IomubE=' },
-            { name: 'Apple MacBook Air Laptop M1 chip', price: 67990, image_url: 'https://images.pexels.com/photos/28579173/pexels-photo-28579173/free-photo-of-modern-workspace-with-laptop-and-coffee-cup.jpeg?auto=compress&cs=tinysrgb&w=600' },
+            { name: 'ASUS VivoBook 15 (2021) Thin and Light Laptop', price: 24990, image_url: './images/laptop4.jpg' },
+            { name: 'Lenovo IdeaPad 1 AMD Ryzen 5 5500U 15.6" (39.62cm) FHD Thin & Light Laptop  ', price: 34990, image_url: './images/laptop1.webp' },
+            { name: 'Dell 15 Thin & Light Laptop, Intel Core i5-1235U ', price: 48990, image_url: './images/laptop2.webp' },
+            { name: 'Apple MacBook Air Laptop M1 chip', price: 67990, image_url: './images/laptop3.jpeg' },
             { name: 'Noise Pulse 2 Max 1.85" Display, Bluetooth Calling Smart Watch', price: 1099 },
             { name: 'beatXP Marv 1.85” (4.5 cm) HD Display Smart Watch with Bluetooth Calling', price: 999 },
             { name: 'Noise Halo Plus 1.46" Super AMOLED Display Elite Smart Watch, Bluetooth Calling', price: 2799 },
@@ -510,7 +510,7 @@
             { name: 'smart phone i phone 15 pro max ', price: 40990 },
             { name: 'Samsung 80 cm (32 Inches) Wondertainment Series HD Ready LED', price: 12890 },
             { name: 'LG 80 cm (32 inches) HD Ready Smart LED TV 32LQ576BPSA (Ceramic Black)', price: 15990 },
-            { name: 'printer store', price: 100 },
+            { name: 'printer store', price: 100  },
 
         ];
 
