@@ -7,11 +7,8 @@ function submit() {
     var password = document.getElementById('password').value;
 
     var users = JSON.parse(sessionStorage.getItem('users'));
-    if(users == null) {
-        users = [];
-    }
+    if(users == null) { users = []; }
 
     users.push({'email': email, 'password': password});
-
     sessionStorage.setItem('users', JSON.stringify(users));
 }
