@@ -12,9 +12,9 @@ function submit() {
     // Validate the email and password
     if (email === 'admin@smartshop.com' && password === 'pasword') {
         console.log('redirecting to product list page');
-       // window.location.href = "smartshop.html";  // Redirect to the homepage
+        window.location.href = "index.html";  // Redirect to the homepage
     } else if(users.find(user => user.email === email && user.password === password)) {
-        window.location.href = "smartshop.html";
+        window.location.href = "index.html";
     }
     else {
         alert('Incorrect email or password. Please try again.');
